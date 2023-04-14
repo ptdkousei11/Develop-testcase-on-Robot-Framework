@@ -1,0 +1,24 @@
+- Login to the lab 10.250.175.202 (cmtg/cmtg)
+- run command "aim service-unit show DHCP" and verify the output should contains "unlocked   enabled    in-service"
+- run command "storage file-system show /scratch" and verify the output should contains "avail..."
+- run command "sosagent vca login VCA" and verify the output should contains "Cannot log in"
+
+================================================================================================================================
+
+1. Login TL1 of DSC8000 lab62 (IP: 10.91.0.62, User/Password: root/y6U&i8o9),  run below command to add new Allowed SCCP TT record
+[root@lab62slot2 ~]# telnet localhost 6669
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+PTI_TL1>
+PTI_TL1> act-user::root:::y6U&i8o9;
+        RSP:lab62slot2,
+        :act-user::COMPLD;
+PTI_TL1>
+PTI_TL1> ADD-GWST-ALWTT::7-0-0:[CTAG]::EPR=STOP:::NP=0,NAI=0,PC_ROUTING=5.4.5;
+
+2. Verify Allowed SCCP TT with ERP = 7.
+PTI_TL1> VFY-GWST-ALWTT::7-0-0;
+
+Delete new record
+PTI_TL1> DLT-GWST-ALWTT::7-0-0:[CTAG];
