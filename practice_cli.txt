@@ -22,3 +22,16 @@ PTI_TL1> VFY-GWST-ALWTT::7-0-0;
 
 Delete new record
 PTI_TL1> DLT-GWST-ALWTT::7-0-0:[CTAG];
+================================================================================================================================
+TC1
+- ssh to 10.250.176.6(nthuong2/Huong@123)
+- check if /home/nthuong2/runtest.sh exist
+- cat /home/nthuong2/runtest.sh and check if it has line "password=$2"
+- download the file to your local PC
+================================================================================================================================
+TC2
+- ssh to 10.250.176.6(nthuong2/Huong@123)
+- create folder /home/nthuong2/temp
+- put the runtest.sh to the folder
+- check if it put successfull
+- delete the folder
