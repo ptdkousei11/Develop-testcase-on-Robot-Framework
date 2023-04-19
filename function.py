@@ -59,3 +59,43 @@ def directory_exists(path):
 def put_the_file(remote_path, local_path):
     sftp = ssh.open_sftp()
     sftp.put(remote_path, local_path)
+
+
+def exec_cmd_with_prompt(prompt, cmd):
+    shell = ssh.invoke_shell()
+
+    recv = b''
+    char = ''
+
+    def matcher(s): return prompt not in s
+
+    while (matcher(char)):
+        recv = shell.recv(1)
+        char += bytes.decode(recv)
+
+    recv = b''
+    char = ''
+    shell.sendall(cmd)
+
+    while (matcher(char)):
+        recv = shell.recv(1)
+        char += bytes.decode(recv)
+
+    return char
+
+
+def write_cmd(prompt, cmd):
+    shell = ssh.invoke_shell()
+
+    shell.sendall(cmd)
+
+    recv = b''
+    char = ''
+
+    def matcher(s): return prompt not in s
+
+    while (matcher(char)):
+        recv = shell.recv(1)
+        char += bytes.decode(recv)
+
+    return char

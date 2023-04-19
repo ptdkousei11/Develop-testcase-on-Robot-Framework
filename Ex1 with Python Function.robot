@@ -3,9 +3,10 @@ Documentation       Exercise 1
 
 Library             SSHLibrary
 Library             RPA.Smartsheet
+Library             function.py
 
 Suite Setup         Open Connection And Log In
-Suite Teardown      Close All Connections
+Suite Teardown      Close Connect
 
 
 *** Variables ***
@@ -16,30 +17,21 @@ ${PASSWORD}     cmtg
 
 *** Test Cases ***
 Execute Command And Verify Output 1
-    Read Until    cli>
-    Write    aim service-unit show DHCP
-    ${output}    Read Until    cli>
-    Log To Console    ${output}
+    ${output}    Exec Cmd With Prompt    cli>    aim service-unit show DHCP\n
     Should Contain    ${output}    unlocked
     Should Contain    ${output}    enabled
     Should Contain    ${output}    in-service
 
 Execute Command And Verify Output 2
-    Read Until    cli>
-    Write    storage file-system show /scratch
-    ${output}    Read Until    cli>
-    Log To Console    ${output}
+    ${output}    Exec Cmd With Prompt    cli>    storage file-system show /scratch\n
     Should Contain    ${output}    avail...
 
 Execute Command And Verify Output 3
-    Read Until    cli>
-    Write    sosagent vca login VCA
-    ${output}    Read Until    cli>
-    Log To Console    ${output}
+    ${output}    Exec Cmd With Prompt    cli>    sosagent vca login VCA\n
     Should Contain    ${output}    Cannot log in
 
 
 *** Keywords ***
 Open Connection And Log In
-    Open Connection    ${HOST}    timeout=30
-    Login    ${USERNAME}    ${PASSWORD}
+    Init
+    Connect    ${HOST}    ${USERNAME}    ${PASSWORD}
