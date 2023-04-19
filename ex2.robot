@@ -16,7 +16,6 @@ ${PASSWORD}     y6U&i8o9
 
 *** Test Cases ***
 Test
-    Read Until    \#
     Write    telnet localhost 6669
     ${output}    Read Until    PTI_TL1>
     Log To Console    ${output}
