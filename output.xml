@@ -1,90 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230417 17:21:53.457" rpa="false" schemaversion="3">
-<suite id="s1" name="Tc2" source="d:\ptdat-batch40\Develop-testcase-on-Robot-Framework\tc2.robot">
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230419 10:52:14.637" rpa="false" schemaversion="3">
+<suite id="s1" name="Tc2 With Python Function" source="d:\ptdat-batch40\Develop-testcase-on-Robot-Framework\tc2 with python function.robot">
 <kw name="Open Connection And Log In" type="SETUP">
-<kw name="Open Connection" library="SSHLibrary">
-<arg>${HOST}</arg>
-<arg>timeout=30</arg>
-<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
-<status status="PASS" starttime="20230417 17:21:54.141" endtime="20230417 17:21:54.142"/>
+<kw name="Init" library="function">
+<status status="PASS" starttime="20230419 10:52:15.325" endtime="20230419 10:52:15.325"/>
 </kw>
-<kw name="Login" library="SSHLibrary">
+<kw name="Connect" library="function">
+<arg>${HOST}</arg>
 <arg>${USERNAME}</arg>
 <arg>${PASSWORD}</arg>
-<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
-<msg timestamp="20230417 17:21:54.142" level="INFO">Logging into '10.250.176.6:22' as 'nthuong2'.</msg>
-<msg timestamp="20230417 17:21:55.443" level="INFO">Read output: Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.4.0-62-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-382 packages can be updated.
-284 updates are security updates.
-
-
-Last login: Mon Apr 17 17:22:15 2023 from 10.250.193.189
-nthuong2@ats-vm:~$</msg>
-<status status="PASS" starttime="20230417 17:21:54.142" endtime="20230417 17:21:55.443"/>
+<status status="PASS" starttime="20230419 10:52:15.325" endtime="20230419 10:52:15.554"/>
 </kw>
-<status status="PASS" starttime="20230417 17:21:54.141" endtime="20230417 17:21:55.443"/>
+<status status="PASS" starttime="20230419 10:52:15.324" endtime="20230419 10:52:15.554"/>
 </kw>
-<test id="s1-t1" name="Create folder /home/nthuong2/temp" line="22">
-<kw name="Execute Command" library="SSHLibrary">
-<arg>mkdir /home/nthuong2/temp</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20230417 17:21:55.445" level="INFO">Executing command 'mkdir /home/nthuong2/temp'.</msg>
-<msg timestamp="20230417 17:21:55.460" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20230417 17:21:55.444" endtime="20230417 17:21:55.460"/>
-</kw>
-<kw name="Directory Should Exist" library="SSHLibrary">
+<test id="s1-t1" name="Create folder /home/nthuong2/temp" line="23">
+<kw name="Create Folder" library="function">
 <arg>/home/nthuong2/temp</arg>
-<doc>Fails if the given ``path`` does not point to an existing directory.</doc>
-<msg timestamp="20230417 17:21:55.501" level="INFO">[chan 2] Opened sftp connection (server version 3)</msg>
-<status status="PASS" starttime="20230417 17:21:55.460" endtime="20230417 17:21:55.505"/>
+<msg timestamp="20230419 10:52:15.747" level="INFO">[chan 0] Opened sftp connection (server version 3)</msg>
+<status status="PASS" starttime="20230419 10:52:15.555" endtime="20230419 10:52:15.754"/>
 </kw>
-<status status="PASS" starttime="20230417 17:21:55.443" endtime="20230417 17:21:55.506"/>
+<kw name="Directory Exists" library="function">
+<var>${output}</var>
+<arg>/home/nthuong2/temp</arg>
+<msg timestamp="20230419 10:52:15.785" level="INFO">[chan 1] Opened sftp connection (server version 3)</msg>
+<msg timestamp="20230419 10:52:15.794" level="INFO">${output} = Directory exists</msg>
+<status status="PASS" starttime="20230419 10:52:15.754" endtime="20230419 10:52:15.794"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230419 10:52:15.795" endtime="20230419 10:52:15.796"/>
+</kw>
+<status status="PASS" starttime="20230419 10:52:15.554" endtime="20230419 10:52:15.798"/>
 </test>
-<test id="s1-t2" name="Put the runtest.sh to the folder" line="26">
-<kw name="Put File" library="SSHLibrary">
+<test id="s1-t2" name="Put the runtest.sh to the folder" line="28">
+<kw name="Put The File" library="function">
 <arg>runtest.sh</arg>
-<arg>/home/nthuong2/temp</arg>
-<doc>Uploads file(s) from the local machine to the remote machine.</doc>
-<msg timestamp="20230417 17:21:55.528" level="INFO">'runtest.sh' -&gt; '/home/nthuong2/temp/runtest.sh'</msg>
-<status status="PASS" starttime="20230417 17:21:55.511" endtime="20230417 17:21:55.528"/>
-</kw>
-<kw name="File Should Exist" library="SSHLibrary">
 <arg>/home/nthuong2/temp/runtest.sh</arg>
-<doc>Fails if the given ``path`` does NOT point to an existing file.</doc>
-<status status="PASS" starttime="20230417 17:21:55.529" endtime="20230417 17:21:55.559"/>
+<msg timestamp="20230419 10:52:15.827" level="INFO">[chan 2] Opened sftp connection (server version 3)</msg>
+<status status="PASS" starttime="20230419 10:52:15.802" endtime="20230419 10:52:15.844"/>
 </kw>
-<status status="PASS" starttime="20230417 17:21:55.508" endtime="20230417 17:21:55.569"/>
+<kw name="File Exists" library="function">
+<var>${output}</var>
+<arg>/home/nthuong2/temp/runtest.sh</arg>
+<msg timestamp="20230419 10:52:15.866" level="INFO">[chan 3] Opened sftp connection (server version 3)</msg>
+<msg timestamp="20230419 10:52:15.873" level="INFO">${output} = File exists!</msg>
+<status status="PASS" starttime="20230419 10:52:15.845" endtime="20230419 10:52:15.873"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230419 10:52:15.875" endtime="20230419 10:52:15.876"/>
+</kw>
+<status status="PASS" starttime="20230419 10:52:15.801" endtime="20230419 10:52:15.877"/>
 </test>
-<test id="s1-t3" name="Delete the folder" line="30">
-<kw name="Execute Command" library="SSHLibrary">
+<test id="s1-t3" name="Delete the folder" line="33">
+<kw name="Exec Cmd" library="function">
 <arg>rm -r /home/nthuong2/temp</arg>
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
-<msg timestamp="20230417 17:21:55.571" level="INFO">Executing command 'rm -r /home/nthuong2/temp'.</msg>
-<msg timestamp="20230417 17:21:55.602" level="INFO">Command exited with return code 0.</msg>
-<status status="PASS" starttime="20230417 17:21:55.571" endtime="20230417 17:21:55.602"/>
+<status status="PASS" starttime="20230419 10:52:15.920" endtime="20230419 10:52:15.938"/>
 </kw>
-<kw name="Directory Should Not Exist" library="SSHLibrary">
+<kw name="Directory Exists" library="function">
+<var>${output}</var>
 <arg>/home/nthuong2/temp</arg>
-<doc>Fails if the given ``path`` points to an existing directory.</doc>
-<status status="PASS" starttime="20230417 17:21:55.603" endtime="20230417 17:21:55.632"/>
+<msg timestamp="20230419 10:52:15.997" level="INFO">[chan 5] Opened sftp connection (server version 3)</msg>
+<msg timestamp="20230419 10:52:16.003" level="INFO">${output} = Directory not exists</msg>
+<status status="PASS" starttime="20230419 10:52:15.938" endtime="20230419 10:52:16.003"/>
 </kw>
-<status status="PASS" starttime="20230417 17:21:55.570" endtime="20230417 17:21:55.633"/>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230419 10:52:16.004" endtime="20230419 10:52:16.005"/>
+</kw>
+<status status="PASS" starttime="20230419 10:52:15.913" endtime="20230419 10:52:16.006"/>
 </test>
-<kw name="Close All Connections" library="SSHLibrary" type="TEARDOWN">
-<doc>Closes all open connections.</doc>
-<status status="PASS" starttime="20230417 17:21:55.634" endtime="20230417 17:21:55.636"/>
+<kw name="Close Connect" library="function" type="TEARDOWN">
+<status status="PASS" starttime="20230419 10:52:16.011" endtime="20230419 10:52:16.012"/>
 </kw>
 <doc>TC2 - ssh to 10.250.176.6(nthuong2/Huong@123)
 - create folder /home/nthuong2/temp
 - put the runtest.sh to the folder
 - check if it put successfull
 - delete the folder</doc>
-<status status="PASS" starttime="20230417 17:21:53.462" endtime="20230417 17:21:55.636"/>
+<status status="PASS" starttime="20230419 10:52:14.644" endtime="20230419 10:52:16.012"/>
 </suite>
 <statistics>
 <total>
@@ -93,7 +90,7 @@ nthuong2@ats-vm:~$</msg>
 <tag>
 </tag>
 <suite>
-<stat pass="3" fail="0" skip="0" id="s1" name="Tc2">Tc2</stat>
+<stat pass="3" fail="0" skip="0" id="s1" name="Tc2 With Python Function">Tc2 With Python Function</stat>
 </suite>
 </statistics>
 <errors>
