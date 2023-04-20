@@ -18,6 +18,7 @@ ${PASSWORD}     cmtg
 *** Test Cases ***
 Execute Command And Verify Output 1
     ${output}    Exec Cmd With Prompt    cli>    aim service-unit show DHCP\n
+    Log    ${output}
     Should Contain    ${output}    unlocked
     Should Contain    ${output}    enabled
     Should Contain    ${output}    in-service

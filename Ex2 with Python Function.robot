@@ -17,8 +17,11 @@ ${PASSWORD}     y6U&i8o9
 
 *** Test Cases ***
 Case 1
-    Write Cmd    PTI_TL1>    telnet localhost 6669\n
-    ${output}    Exec Cmd With Prompt    PTI_TL1>    act-user::root:::y6U&i8o9;\n
+    ${output}    Read Until The Prompt    \#
+    Log    ${output}
+    ${output}    Write Cmd With Prompt    >    telnet localhost 6669\n
+    Log    ${output}
+    ${output}    Exec Cmd    pwd
     Log    ${output}
 
 

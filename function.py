@@ -9,7 +9,8 @@ def init():
 
 def connect(ip, username, password):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=ip, username=username, password=password)
+    ssh.connect(hostname=ip, username=username,
+                password=password, timeout=30)
 
 
 def exec_cmd(cmd):
@@ -73,9 +74,10 @@ def exec_cmd_with_prompt(prompt, cmd):
         recv = shell.recv(1)
         char += bytes.decode(recv)
 
+    shell.sendall(cmd)
+
     recv = b''
     char = ''
-    shell.sendall(cmd)
 
     while (matcher(char)):
         recv = shell.recv(1)
@@ -84,9 +86,8 @@ def exec_cmd_with_prompt(prompt, cmd):
     return char
 
 
-def write_cmd(prompt, cmd):
+def write_cmd_with_prompt(prompt, cmd):
     shell = ssh.invoke_shell()
-
     shell.sendall(cmd)
 
     recv = b''
@@ -99,3 +100,23 @@ def write_cmd(prompt, cmd):
         char += bytes.decode(recv)
 
     return char
+
+
+def read_until_the_prompt(prompt):
+    shell = ssh.invoke_shell()
+
+    recv = b''
+    char = ''
+
+    def matcher(s): return prompt not in s
+
+    while (matcher(char)):
+        recv = shell.recv(1)
+        char += bytes.decode(recv)
+
+    return char
+
+
+def write_cmd(cmd):
+    shell = ssh.invoke_shell()
+    return shell.send(cmd)
