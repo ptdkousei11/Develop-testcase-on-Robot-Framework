@@ -68,29 +68,6 @@ def put_the_file(remote_path, local_path):
     sftp.put(remote_path, local_path)
 
 
-def exec_cmd_with_prompt(prompt, cmd):
-    recv = b''
-    char = ''
-
-    def matcher(s): return prompt not in s
-
-    while (matcher(char)):
-        recv = shell.recv(1)
-        char += bytes.decode(recv)
-
-    shell.sendall(cmd)
-    shell.sendall('\n')
-
-    recv = b''
-    char = ''
-
-    while (matcher(char)):
-        recv = shell.recv(1)
-        char += bytes.decode(recv)
-
-    return char
-
-
 def write_cmd_with_prompt(prompt, cmd):
     shell.sendall(cmd)
 
