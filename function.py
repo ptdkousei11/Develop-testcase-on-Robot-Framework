@@ -1,5 +1,6 @@
 import paramiko
 global ssh
+global shell
 
 
 def init():
@@ -11,6 +12,11 @@ def connect(ip, username, password):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(hostname=ip, username=username,
                 password=password, timeout=30)
+
+
+def shell_init():
+    global shell
+    shell = ssh.invoke_shell()
 
 
 def exec_cmd(cmd):
@@ -63,8 +69,6 @@ def put_the_file(remote_path, local_path):
 
 
 def exec_cmd_with_prompt(prompt, cmd):
-    shell = ssh.invoke_shell()
-
     recv = b''
     char = ''
 
@@ -75,6 +79,7 @@ def exec_cmd_with_prompt(prompt, cmd):
         char += bytes.decode(recv)
 
     shell.sendall(cmd)
+    shell.sendall('\n')
 
     recv = b''
     char = ''
@@ -87,7 +92,6 @@ def exec_cmd_with_prompt(prompt, cmd):
 
 
 def write_cmd_with_prompt(prompt, cmd):
-    shell = ssh.invoke_shell()
     shell.sendall(cmd)
 
     recv = b''
@@ -99,12 +103,10 @@ def write_cmd_with_prompt(prompt, cmd):
         recv = shell.recv(1)
         char += bytes.decode(recv)
 
-    return char
+    shell.sendall('\n')
 
 
 def read_until_the_prompt(prompt):
-    shell = ssh.invoke_shell()
-
     recv = b''
     char = ''
 
@@ -118,5 +120,5 @@ def read_until_the_prompt(prompt):
 
 
 def write_cmd(cmd):
-    shell = ssh.invoke_shell()
-    return shell.send(cmd)
+    shell.sendall(cmd)
+    shell.sendall('\n')

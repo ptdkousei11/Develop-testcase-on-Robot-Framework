@@ -16,12 +16,29 @@ ${PASSWORD}     y6U&i8o9
 
 
 *** Test Cases ***
-Case 1
-    ${output}    Read Until The Prompt    \#
+Case 2.1
+    Write Cmd    telnet localhost 6669
+    ${output}    Read Until The Prompt    >
     Log    ${output}
-    ${output}    Write Cmd With Prompt    >    telnet localhost 6669\n
+
+Case 2.2
+    Write Cmd    act-user::root:::y6U&i8o9;
+    ${output}    Read Until The Prompt    >
     Log    ${output}
-    ${output}    Exec Cmd    pwd
+
+Case 2.3
+    Write Cmd    ADD-GWST-ALWTT::7-0-0:[CTAG]::EPR=STOP:::NP=0,NAI=0,PC_ROUTING=5.4.5;
+    ${output}    Read Until The Prompt    >
+    Log    ${output}
+
+Case 2.4
+    Write Cmd    VFY-GWST-ALWTT::7-0-0;
+    ${output}    Read Until The Prompt    >
+    Log    ${output}
+
+Case 2.5
+    Write Cmd    DLT-GWST-ALWTT::7-0-0:[CTAG];
+    ${output}    Read Until The Prompt    >
     Log    ${output}
 
 
@@ -29,3 +46,4 @@ Case 1
 Open Connection And Log In
     Init
     Connect    ${HOST}    ${USERNAME}    ${PASSWORD}
+    Shell Init
