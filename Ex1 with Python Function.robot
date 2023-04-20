@@ -16,7 +16,7 @@ ${PASSWORD}     cmtg
 
 
 *** Test Cases ***
-Execute Command And Verify Output 1
+Case 1.1
     Write Cmd With Prompt    cli>    aim service-unit show DHCP
     ${output}    Read Until The Prompt    cli>
     Log    ${output}
@@ -24,13 +24,13 @@ Execute Command And Verify Output 1
     Should Contain    ${output}    enabled
     Should Contain    ${output}    in-service
 
-Execute Command And Verify Output 2
+Case 1.2
     Write Cmd With Prompt    cli>    storage file-system show /scratch
     ${output}    Read Until The Prompt    cli>
     Log    ${output}
     Should Contain    ${output}    avail...
 
-Execute Command And Verify Output 3
+Case 1.3
     Write Cmd With Prompt    cli>    sosagent vca login VCA
     ${output}    Read Until The Prompt    cli>
     Log    ${output}
