@@ -5,9 +5,8 @@ Documentation       TC1
 ...                 - cat /home/nthuong2/runtest.sh and check if it has line "password=$2"
 ...                 - download the file to your local PC
 
-Library             SSHLibrary
 Library             RPA.Smartsheet
-Library             function.py
+Library             SSH.py
 
 Suite Setup         Open Connection And Log In
 Suite Teardown      Close Connect
@@ -35,5 +34,5 @@ Download the file to your local PC
 
 *** Keywords ***
 Open Connection And Log In
-    Init
+    # Init
     Connect    ${HOST}    ${USERNAME}    ${PASSWORD}

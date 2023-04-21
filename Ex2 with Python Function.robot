@@ -1,9 +1,8 @@
 *** Settings ***
 Documentation       Exercise 2
 
-Library             SSHLibrary
 Library             RPA.Smartsheet
-Library             function.py
+Library             SSH.py
 
 Suite Setup         Open Connection And Log In
 Suite Teardown      Close Connect
@@ -44,6 +43,4 @@ Case 2.5
 
 *** Keywords ***
 Open Connection And Log In
-    Init
     Connect    ${HOST}    ${USERNAME}    ${PASSWORD}
-    Shell Init

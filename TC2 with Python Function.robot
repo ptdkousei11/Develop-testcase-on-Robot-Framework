@@ -5,9 +5,8 @@ Documentation       TC2 - ssh to 10.250.176.6(nthuong2/Huong@123)
 ...                 - check if it put successfull
 ...                 - delete the folder
 
-Library             SSHLibrary
 Library             RPA.Smartsheet
-Library             function.py
+Library             SSH.py
 
 Suite Setup         Open Connection And Log In
 Suite Teardown      Close Connect
@@ -38,5 +37,4 @@ Delete the folder
 
 *** Keywords ***
 Open Connection And Log In
-    Init
     Connect    ${HOST}    ${USERNAME}    ${PASSWORD}
