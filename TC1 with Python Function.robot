@@ -34,5 +34,4 @@ Download the file to your local PC
 
 *** Keywords ***
 Open Connection And Log In
-    # Init
     Connect    ${HOST}    ${USERNAME}    ${PASSWORD}

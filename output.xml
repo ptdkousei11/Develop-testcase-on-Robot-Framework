@@ -1,80 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230421 10:36:46.236" rpa="false" schemaversion="3">
-<suite id="s1" name="Tc2 With Python Function" source="d:\ptdat-batch40\Develop-testcase-on-Robot-Framework\tc2 with python function.robot">
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230421 16:05:02.404" rpa="false" schemaversion="3">
+<suite id="s1" name="Tc1 With Python Function" source="d:\ptdat-batch40\Develop-testcase-on-Robot-Framework\tc1 with python function.robot">
 <kw name="Open Connection And Log In" type="SETUP">
 <kw name="Connect" library="SSH">
 <arg>${HOST}</arg>
 <arg>${USERNAME}</arg>
 <arg>${PASSWORD}</arg>
-<msg timestamp="20230421 10:36:47.518" level="INFO">[chan 1] Opened sftp connection (server version 3)</msg>
-<status status="PASS" starttime="20230421 10:36:46.941" endtime="20230421 10:36:47.520"/>
+<msg timestamp="20230421 16:05:03.601" level="INFO">[chan 1] Opened sftp connection (server version 3)</msg>
+<status status="PASS" starttime="20230421 16:05:03.106" endtime="20230421 16:05:03.603"/>
 </kw>
-<status status="PASS" starttime="20230421 10:36:46.940" endtime="20230421 10:36:47.520"/>
+<status status="PASS" starttime="20230421 16:05:03.105" endtime="20230421 16:05:03.603"/>
 </kw>
-<test id="s1-t1" name="Create folder /home/nthuong2/temp" line="22">
-<kw name="Create Folder" library="SSH">
-<arg>/home/nthuong2/temp</arg>
-<status status="PASS" starttime="20230421 10:36:47.521" endtime="20230421 10:36:47.539"/>
-</kw>
-<kw name="Directory Exists" library="SSH">
-<var>${output}</var>
-<arg>/home/nthuong2/temp</arg>
-<msg timestamp="20230421 10:36:47.542" level="INFO">${output} = Directory exists</msg>
-<status status="PASS" starttime="20230421 10:36:47.540" endtime="20230421 10:36:47.542"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${output}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230421 10:36:47.543" endtime="20230421 10:36:47.544"/>
-</kw>
-<status status="PASS" starttime="20230421 10:36:47.520" endtime="20230421 10:36:47.544"/>
-</test>
-<test id="s1-t2" name="Put the runtest.sh to the folder" line="27">
-<kw name="Put The File" library="SSH">
-<arg>runtest.sh</arg>
-<arg>/home/nthuong2/temp/runtest.sh</arg>
-<status status="PASS" starttime="20230421 10:36:47.608" endtime="20230421 10:36:47.634"/>
-</kw>
+<test id="s1-t1" name="Check if /home/nthuong2/runtest.sh exist" line="23">
 <kw name="File Exists" library="SSH">
 <var>${output}</var>
-<arg>/home/nthuong2/temp/runtest.sh</arg>
-<msg timestamp="20230421 10:36:47.638" level="INFO">${output} = File exists!</msg>
-<status status="PASS" starttime="20230421 10:36:47.635" endtime="20230421 10:36:47.638"/>
+<arg>/home/nthuong2/runtest.sh</arg>
+<msg timestamp="20230421 16:05:03.611" level="INFO">${output} = File exists!</msg>
+<status status="PASS" starttime="20230421 16:05:03.608" endtime="20230421 16:05:03.611"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
 <arg>${output}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230421 10:36:47.641" endtime="20230421 10:36:47.643"/>
+<status status="PASS" starttime="20230421 16:05:03.615" endtime="20230421 16:05:03.621"/>
 </kw>
-<status status="PASS" starttime="20230421 10:36:47.607" endtime="20230421 10:36:47.644"/>
+<status status="PASS" starttime="20230421 16:05:03.603" endtime="20230421 16:05:03.622"/>
 </test>
-<test id="s1-t3" name="Delete the folder" line="32">
+<test id="s1-t2" name="Cat /home/nthuong2/runtest.sh and check if it has line &quot;password=$2&quot;" line="27">
 <kw name="Exec Cmd" library="SSH">
-<arg>rm -r /home/nthuong2/temp</arg>
-<status status="PASS" starttime="20230421 10:36:47.650" endtime="20230421 10:36:47.661"/>
-</kw>
-<kw name="Directory Exists" library="SSH">
 <var>${output}</var>
-<arg>/home/nthuong2/temp</arg>
-<msg timestamp="20230421 10:36:47.709" level="INFO">${output} = Directory not exists</msg>
-<status status="PASS" starttime="20230421 10:36:47.662" endtime="20230421 10:36:47.709"/>
+<arg>cat /home/nthuong2/runtest.sh</arg>
+<msg timestamp="20230421 16:05:03.634" level="INFO">${output} = #!/bin/bash
+printf "\n"
+link=$1
+if [ ! -d $link ];then
+   echo "The input link does not exist!"
+   exit 
+fi
+
+defe_count=`ls -1q $link/*efinition.pl | wc -l`
+case $defe_count in 
+   0)
+      echo "Ther...</msg>
+<status status="PASS" starttime="20230421 16:05:03.625" endtime="20230421 16:05:03.634"/>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
+<kw name="Should Contain" library="BuiltIn">
 <arg>${output}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230421 10:36:47.710" endtime="20230421 10:36:47.711"/>
+<arg>password=$2</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20230421 16:05:03.635" endtime="20230421 16:05:03.635"/>
 </kw>
-<status status="PASS" starttime="20230421 10:36:47.649" endtime="20230421 10:36:47.713"/>
+<status status="PASS" starttime="20230421 16:05:03.624" endtime="20230421 16:05:03.640"/>
+</test>
+<test id="s1-t3" name="Download the file to your local PC" line="31">
+<kw name="Download The File" library="SSH">
+<arg>/home/nthuong2/runtest.sh</arg>
+<arg>${PATH}</arg>
+<status status="PASS" starttime="20230421 16:05:03.646" endtime="20230421 16:05:03.682"/>
+</kw>
+<status status="PASS" starttime="20230421 16:05:03.645" endtime="20230421 16:05:03.683"/>
 </test>
 <kw name="Close Connect" library="SSH" type="TEARDOWN">
-<status status="PASS" starttime="20230421 10:36:47.718" endtime="20230421 10:36:47.719"/>
+<status status="PASS" starttime="20230421 16:05:03.686" endtime="20230421 16:05:03.686"/>
 </kw>
-<doc>TC2 - ssh to 10.250.176.6(nthuong2/Huong@123)
-- create folder /home/nthuong2/temp
-- put the runtest.sh to the folder
-- check if it put successfull
-- delete the folder</doc>
-<status status="PASS" starttime="20230421 10:36:46.242" endtime="20230421 10:36:47.719"/>
+<doc>TC1
+- ssh to 10.250.176.6(nthuong2/Huong@123)
+- check if /home/nthuong2/runtest.sh exist
+- cat /home/nthuong2/runtest.sh and check if it has line "password=$2"
+- download the file to your local PC</doc>
+<status status="PASS" starttime="20230421 16:05:02.411" endtime="20230421 16:05:03.686"/>
 </suite>
 <statistics>
 <total>
@@ -83,7 +76,7 @@
 <tag>
 </tag>
 <suite>
-<stat pass="3" fail="0" skip="0" id="s1" name="Tc2 With Python Function">Tc2 With Python Function</stat>
+<stat pass="3" fail="0" skip="0" id="s1" name="Tc1 With Python Function">Tc1 With Python Function</stat>
 </suite>
 </statistics>
 <errors>

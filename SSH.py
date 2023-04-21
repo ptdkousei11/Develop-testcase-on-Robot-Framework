@@ -1,5 +1,6 @@
 import paramiko
 from robot.api.deco import library, keyword
+from uuid import uuid4
 
 
 @library(scope='GLOBAL')
@@ -8,12 +9,19 @@ class SSH():
         self.ssh = paramiko.SSHClient()
 
     @keyword
+    def set_session_id(self):
+        self.session_id = uuid4()
+        return self.session_id
+
+    @keyword
     def connect(self, ip, username, password):
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.ssh.connect(hostname=ip, username=username,
                          password=password, timeout=30)
         self.shell = self.ssh.invoke_shell()
         self.sftp = self.ssh.open_sftp()
+        session_id = self.set_session_id()
+        return session_id
 
     @keyword
     def exec_cmd(self, cmd):
